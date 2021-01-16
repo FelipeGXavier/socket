@@ -13,4 +13,8 @@ router.post('/signup', async (req, res) => {
   return res.json({ login: result.login, id: result.id, token });
 });
 
+router.get('/current', authMiddleware, async (req, res) => {
+  return res.json(req.user);
+});
+
 module.exports = router;
