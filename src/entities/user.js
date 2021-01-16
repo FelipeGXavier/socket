@@ -1,6 +1,7 @@
 const env = require('../env');
 const yup = require('yup');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const schema = yup.object().shape({
   login: yup
@@ -23,6 +24,7 @@ const schema = yup.object().shape({
 
 class User {
   static async create(login, password) {
+    password = await bcrypt.hash(password, 10);
     const userInput = { login, password };
     try {
       await schema.validate(userInput, { abortEarly: false });
@@ -37,3 +39,5 @@ class User {
     return jwt.sign({ id }, env.get('SECRET_KEY'));
   }
 }
+
+module.exports = User;
