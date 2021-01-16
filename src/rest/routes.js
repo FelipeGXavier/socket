@@ -17,4 +17,10 @@ router.get('/current', authMiddleware, async (req, res) => {
   return res.json(req.user);
 });
 
+router.get('/send', (req, res) => {
+  const socket = req.app.get('socket');
+  socket.emit('hello', 'Hello World!');
+  res.send('Ok!');
+});
+
 module.exports = router;

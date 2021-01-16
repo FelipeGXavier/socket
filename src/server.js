@@ -1,8 +1,9 @@
 const express = require('express');
 const routes = require('./rest/routes');
 const path = require('path');
-
 const app = express();
+const SocketService = require('./services/socket');
+const server = require('http').createServer(app);
 
 app.use(express.json());
 
@@ -14,4 +15,10 @@ app.get('/', (req, res) => {
   res.render('index.html');
 });
 
-app.listen(3000);
+server.listen(3000);
+
+app.set('socket', new SocketService(server));
+
+module.exports = app;
+
+const outside = require('./outside');
