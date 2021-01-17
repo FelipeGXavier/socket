@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const SocketService = require('./services/socket');
 const server = require('http').createServer(app);
+const LookNotificationJob = require('./jobs/lookNotification');
 
 app.use(express.json());
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 
 server.listen(3000);
 
-app.set('socket', new SocketService(server));
+const socketService = new SocketService(server);
+app.set('socket', socketService);
 
-module.exports = app;
+new LookNotificationJob(socketService).run();

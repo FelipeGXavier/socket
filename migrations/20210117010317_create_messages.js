@@ -3,6 +3,7 @@ exports.up = function (knex) {
     table.increments();
     table.string('message').notNullable();
     table.timestamp('push_timestamp');
+    table.boolean('scheduled').defaultTo(false);
     table.integer('user_id').references('id').inTable('users');
   });
 };

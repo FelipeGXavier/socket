@@ -8,6 +8,16 @@ const insert = async (message) => {
   }
 };
 
+const lookForNewNotification = async () => {
+  return await knex('messages').where({ scheduled: false }).select('*');
+};
+
+const markAsSchedule = async (id) => {
+  return await knex('messages').where({ id }).update({ scheduled: true });
+};
+
 module.exports = {
   insert,
+  lookForNewNotification,
+  markAsSchedule,
 };
