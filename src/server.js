@@ -20,5 +20,3 @@ server.listen(3000);
 app.set('socket', new SocketService(server));
 
 module.exports = app;
-
-const outside = require('./outside');
