@@ -7,7 +7,7 @@ class LookNotificationJob {
   }
 
   run() {
-    schedule.scheduleJob('*/60 * * * * *', () => {
+    schedule.scheduleJob('*/10 * * * * *', () => {
       messageRepository.lookForNewNotification().then((rows) => {
         if (rows.length > 0) {
           this.socketService.emit('hello', rows);

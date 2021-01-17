@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../entities/user');
 const userRepository = require('../repository/userRepository');
+const socketPayloadRepository = require('../repository/socketPayloadRepository');
 const authMiddleware = require('../auth/auth');
 
 const router = express.Router();
@@ -15,6 +16,14 @@ router.post('/signup', async (req, res) => {
 
 router.get('/current', authMiddleware, async (req, res) => {
   return res.json(req.user);
+});
+
+router.get('/notify', async (req, res) => {
+  const io = req.app.get('socket').get();
+  const result = await socketPayloadRepository.get(2);
+  const socketId = result[0].socket_id;
+  io.to(socketId).emit('hello', 'Teste');
+  res.json({ socket_id: socketId });
 });
 
 router.get('/send', (req, res) => {

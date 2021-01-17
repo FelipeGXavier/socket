@@ -11,6 +11,10 @@ class SocketService {
   emit(event, message) {
     if (message) this.io.emit(event, message);
   }
+
+  get() {
+    return this.io;
+  }
 }
 
 module.exports = SocketService;
